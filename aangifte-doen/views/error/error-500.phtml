@@ -1,0 +1,36 @@
+<?php $this->render('page-header', $view, 'partials') ?>
+<div class="panel">
+    <div class="panel-heading">
+        <div class="panel-heading">
+            <h1>Ojee er is iets mis gegaan</h1>
+        </div>
+
+    </div>
+    <div class="panel-body">
+        <p>Probeer het nogmaals <a class="btn btn-info" href="?action=aangfite&jaar">Aangifte doen</a></p>
+    </div>
+</div>
+<?php if (isset($view['show_exceptions']) && $view['show_exceptions'] === true): ?>
+    <?php if (isset($view['exception'])): ?>
+        <p><?php echo $view['exception']->getMessage() ?></p>
+        <hr/>
+        <h2><?php echo 'Additional information' ?>:</h2>
+        <h3><?php echo get_class($view['exception']); ?></h3>
+        <dl>
+            <dt><?php echo 'File' ?>:</dt>
+            <dd>
+                <pre class="prettyprint linenums"><?php echo $view['exception']->getFile() ?>:<?php echo $view['exception']->getLine() ?></pre>
+            </dd>
+            <dt><?php echo 'Message' ?>:</dt>
+            <dd>
+                <pre class="prettyprint linenums"><?php echo $view['exception']->getMessage() ?></pre>
+            </dd>
+            <dt><?php echo 'Stack trace' ?>:</dt>
+            <dd>
+                <pre class="prettyprint linenums"><?php echo $view['exception']->getTraceAsString() ?></pre>
+            </dd>
+        </dl>
+    <?php endif ?>
+<?php endif ?>
+<?php
+$this->render('page-footer', $view, 'partials');

@@ -1,0 +1,50 @@
+<?php
+$this->render('page-header', $view, 'partials');
+$this->render('aangifte-header', $view, 'aangifte');
+?>
+<p class="question">Neem de gegevens over uit je jaaropgave. Meerdere werkegevers, en dus jaaropgaven? Die kun je in de volgende stap toevoegen.</p>
+<hr>
+<form id="form1" class="form-horizontal" action="?action=opgave&edit" method="post">
+    <input type="hidden" name="csrf" value="<?php echo $view['csrf']; ?>" />
+    <input type="hidden" name="opgave[id]" value="<?php echo $view['opgave']->id; ?>" />
+    <div class="form-group">
+        <label class="control-label col-sm-3 no-gutter-right" for="opgave[werkgever]">Naam werkgever: <span class="glyphicon"></span></label>
+        <div class="col-sm-9">
+            <input type="text" id="opgave[werkgever]" name="opgave[werkgever]" value="<?php echo $view['opgave']->werkgever ?>" class="form-control" title="Vul je werkgever in" validate="required:true">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-3 no-gutter-right" for="opgave[salaris]">Jaarsalaris: <span class="info-tooltip" title="Ook wel genoemd: loon loonheffingen, bruto bedrag, loon, loon voor loonbelasting/volksverzekeringen, fiscaal loon."><span class="glyphicon glyphicon-question-sign toolhelp"></span></span></label>
+        <div class="col-sm-9">
+            <input type="text" id="opgave[salaris]" name="opgave[salaris]" value="<?php echo $view['opgave']->salaris ?>" class="form-control" placeholder="Jaarsalaris" title="Geef het bedrag afgerond in hele euro's, gebruik alleen cijfers. Geen punten of komma's." validate="required:true,digits:true">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-3 no-gutter-right" for="opgave[loonheffing]">Loonheffing: <span class="info-tooltip" title="Ook wel genoemd: ingehouden loonbelasting, ingehouden loonheffing, ingehouden loonbelasting/premie volksverzekeringen."><span class="glyphicon glyphicon-question-sign toolhelp"></span></span></label>
+        <div class="col-sm-9">
+            <input type="text" id="opgave[loonheffing]" name="opgave[loonheffing]" value="<?php echo $view['opgave']->loonheffing ?>" class="form-control" placeholder="Loonheffing" title="Geef het bedrag afgerond in hele euro's, gebruik alleen cijfers. Geen punten of komma's." validate="required:true,digits:true">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-3 no-gutter-right" for="opgave[arbeidskorting]">Arbeidskorting: <span class="info-tooltip" title="Ook wel genoemd: verrekende arbeidskorting."><span class="glyphicon glyphicon-question-sign toolhelp"></span></span></label>
+        <div class="col-sm-9">
+            <input type="text" id="opgave[arbeidskorting]" name="opgave[arbeidskorting]" value="<?php echo $view['opgave']->arbeidskorting ?>" class="form-control" placeholder="Arbeidskorting" title="Geef het bedrag afgerond in hele euro's, gebruik alleen cijfers. Geen punten of komma's." validate="digits:true">
+        </div>
+    </div>
+    <div class="clearfix"></div>
+	<hr>
+    <div class="form-group prev-next">
+        <div class="col-sm-12">
+            <a class="btn btn-default" href="?action=opgave&cancel">Terug</a>
+            <div class="pull-right">
+                <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-ok"></span> Volgende</button>
+            </div>
+        </div>
+    </div>
+</form>
+<?php
+$this->render('aangifte-footer', $view, 'aangifte');
+$this->render('page-footer', $view, 'partials');

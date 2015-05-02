@@ -1,0 +1,23 @@
+<?php
+$this->render('page-header', $view, 'partials');
+$this->render('aangifte-header', $view, 'aangifte');
+?>
+<p class="question">Rond elk bedrag af naar boven in hele euro's. Je bent zelf verantwoordelijk voor de bewijslast met (kassa)bonnen en/of rekeningen. De kans dat hiernaar wordt gevraagd is klein, maar je bent het wel verplicht.</p>
+<hr>
+<form action="?action=aangifte&kosten" method="post">
+    <input type="hidden" name="csrf" value="<?php echo $view['csrf'] ?>" />
+    <?php
+    if (!$view['aangifte']->studiefinanciering) {
+        $this->render('studiekosten', $view, 'aangifte');
+    };
+    $this->render('ziektekosten', $view, 'aangifte');
+    ?>
+    <div class="form-group">
+        <hr>
+        <a class="btn btn-default" href="?action=aangifte&kosten&prev">Terug</a>
+        <button type="submit" class="btn btn-warning pull-right"><span class="glyphicon glyphicon-ok"></span> Volgende</button>
+    </div>
+</form>
+<?php
+$this->render('aangifte-footer', $view, 'aangifte');
+$this->render('page-footer', $view, 'partials');

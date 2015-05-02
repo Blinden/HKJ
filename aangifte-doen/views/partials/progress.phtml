@@ -1,0 +1,11 @@
+<?php
+$view['progress'] = isset($view['progress'])? $view['progress']: array('step' => 1, 'steps' => 5);
+$view['completed'] = round(100 * ($view['progress']['step']) / $view['progress']['steps']);
+
+if ($view['completed'] < 5) {
+    $view['completed'] = 5;
+}
+elseif ($view['completed'] > 95) {
+    $view['completed'] = 95;
+}
+?>

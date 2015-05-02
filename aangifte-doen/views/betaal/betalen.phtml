@@ -1,0 +1,51 @@
+<?php include 'views/partials/page-header.phtml'; ?>
+<div id="aangifte-panel" class="panel panel-warning">
+    <div class="panel-heading">
+        <h3>Betalen met iDeal</h3>
+        <p class="small">Kies jouw bank.</p>
+    </div>
+    <div class="panel-body">
+        <?php if ($this->hasMessage($script)): ?>
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <?php echo $this->getMessage($script) ?>
+            </div>
+        <?php endif; ?>
+        <form id="form1" class="form-horizontal" name="bankselect" action="?action=betaal&betalen" method="post">
+            <input type="hidden" name="csrf" value="<?php echo $view['csrf']; ?>">
+            <input type="hidden" name="aangifte_id" value="<?php echo $view['aangifte']->aangifte_id ?>">
+            <?php $this->render('betaal-betaling', $view) ?>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="bank_id">Selecteer jouw bank</label>
+                <div class="col-sm-9">
+                    <select id="bank_id" name="bank_id" onChange="document.bankselect.submit();" class="form-control" validate="required:true">
+                        <option value=""></option>';
+                        <?php
+                        foreach ($view['banken'] as $country => $banken) {
+                            echo sprintf('<optgroup label="%s">', $country);
+                            foreach ($banken as $id => $name) {
+                                echo sprintf('<option value="%s">%s</option>', $id, $name);
+                            }
+                            echo '</optgroup>';
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <!--<div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <img src="img/ideal-logo.png" alt="Hoeveelkrijgjij Betalen!">
+                </div>
+            </div>-->
+            <hr>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <a class="btn btn-default" href="?action=aangifte&order">Terug</a>
+                    <!--<button type="submit" class="btn btn-warning pull-right"><span class="glyphicon glyphicon-ok"></span> Ja, dit klopt!</button>-->
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<?php
+include 'views/partials/page-footer.phtml';

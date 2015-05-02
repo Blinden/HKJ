@@ -1,0 +1,8 @@
+<div>
+<?php if (isset($view->profiel)): ?>
+    <span><?php echo implode(' ', array($view->profiel->first_name, $view->profiel->last_name)) ?></span>
+    <a class="btn btn-default" href="?action=facebook&logout">Facebook afmelden</a>
+<?php else: ?>
+    <a class="" href="?action=facebook&login">Facebook aanmelden</a>
+<?php endif; ?>
+</div>

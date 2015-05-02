@@ -1,0 +1,42 @@
+<?php include 'views/partials/header.phtml'; ?>
+<p><a href="javascript:history.back(-1)">Terug</a></p>
+<h1>Jaaropgave niet bij de hand?</h1>
+<p>Zoek hem op in je administratie, of vraag hem snel aan bij je werkgever(s) van <?php echo $this->aangifte->jaar; ?>! Bij een kleiner bedrijf is dat de eigenaar of de administratieafdeling. Bij een groter bedrijf is dat de P&amp;O-afdeling.</p>
+<p>Het is niet moeilijk: gewoon opbellen en de jaaropgave vragen. De werkgever stuurt je de opgave toe. Doe dan opnieuw de check van Hoeveelkrijgjij.nl. Dan regelen wij alles voor je, zodat jij je geld krijgt.</p>
+<p>We hopen je snel terug te zien. Like ons op Facebook, dan houden we contact!</p>
+<br>
+<h1>Geen scholier / student of ouder dan 30 jaar in <?php echo $this->aangifte->jaar ?>?</h1>
+<p>Wij zijn gespecialiseerd in belastingaangiften voor scholieren en studenten, en werken met een leeftijdsgrens tot 30 jaar. Overige aanvragen nemen we momenteel niet in behandeling.</p>
+<br>
+<h1>Inkomen van meer dan &euro;&nbsp;18.000,-  in <?php echo $this->aangifte->jaar ?>?</h1>
+<p>
+    Je krijgt extra aandacht van ons! Tot &euro; 18.000 regelen we belastingaangiftes online, maar jij valt in de categorie daarboven. We kunnen je aangifte  persoonlijk regelen, zodat we er meer voor je uit kunnen halen.<br>
+    Vul onderstaand formulier in, je hoort dan snel van ons over hoe verder.
+</p>
+<form id="form1" action="?action=geen-student" method="post">
+    <input type="hidden" name="csrf" value="<?php echo $this->csrf; ?>">
+    <input type="hidden" name="subject" value="Betreft: inkomen +18.000 - <?php echo $this->aangifte->jaar ?>">
+    <span class="respform">
+        <div class="descriptor">Achternaam:</div>
+        <div class="inputtor">
+            <input name="aanvrager[achternaam]" id="achternaam" type="text" title="Vul minimaal 3 karakters in." validate="required:true,minlength:3" />
+        </div>
+        <div class="descriptor">Voornaam:</div>
+        <div class="inputtor">
+            <input name="aanvrager[voorletters]" id="voorletters" type="text" title="Vul minimaal 1 letter in." validate="required:true" />
+        </div>
+        <div class="descriptor">E-mailadres:</div>
+        <div class="inputtor">
+            <input name="aanvrager[email]" id="email" type="text" title="Vul een geldig e-mailadres in" validate="required:true, email:true" />
+        </div>
+        <div class="descriptor">Vraag/opmerking:</div>
+        <div class="inputtor">
+            <textarea name="aanvrager[vraag]" id="vraag" title="Vul een vraag of opmerking in" validate="required:true"></textarea>
+        </div>
+    </span>
+    <div class="submittor"><input type="submit" value="Verzenden" /></div>
+</form>
+<h1>Houd contact via Facebook</h1>
+<p>Houd contact door onze Facebook-pagina te liken. We houden je dan op de hoogte van de ontwikkelingen!</p>
+<?php include 'views/partials/facebook-sdk.phtml'; ?>
+<?php include 'views/partials/footer.phtml';

@@ -1,0 +1,28 @@
+<?php
+$this->render('page-header', $view, 'partials');
+$this->render('aangifte-header', $view);
+?>
+<form id="form1" action="?action=aangifte&studiefinanciering" method="post">
+    <input type="hidden" name="csrf" value="<?php echo $view['csrf'] ?>" />
+    <div class="form-group">
+        <p class="question">Ontving je studiefinanciering in <?php echo $view['aangifte']->jaar; ?>?</p>
+    </div>
+	<hr>
+    <div class="form-group">
+        <div style="margin-left:auto; margin-right:auto; width:40%;">
+            <button type="submit" name="antwoord" class="btn <?php echo ($view['aangifte']->studiefinanciering === true) ? 'btn-warning' : 'btn-default' ?> btn-lg btn-block" value="1">Ja</button>
+            <button type="submit" name="antwoord" class="btn <?php echo ($view['aangifte']->studiefinanciering === false) ? 'btn-warning' : 'btn-default' ?> btn-lg btn-block" value="0">Nee</button>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <hr>
+    <div class="form-group prev-next">
+        <a class="btn btn-default" href="?action=aangifte&studiefinanciering&prev">Terug</a>
+        <?php if (in_array($view['aangifte']->studiefinanciering, array(false, true), true)): ?>
+            <a class="btn btn-warning pull-right" href="?action=aangifte&studiefinanciering&next"><span class="glyphicon glyphicon-ok"></span> Volgende</a>
+        <?php endif ?>
+    </div>
+</form>
+<?php
+$this->render('aangifte-footer', $view);
+$this->render('page-footer', $view, 'partials');

@@ -1,0 +1,25 @@
+<div class="table-responsive col-sm-offset-3">
+    <h3>Studiekosten</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Omschrijving</th><th>Bedrag</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php for ($i = 1; $i <= 5; $i++): ?>
+                <?php
+                $omschrijving = isset($view['aangifte']->studiekosten[$i]['omschrijving']) ? $view['aangifte']->studiekosten[$i]['omschrijving'] : '';
+                $bedrag = isset($view['aangifte']->studiekosten[$i]['bedrag']) ? $view['aangifte']->studiekosten[$i]['bedrag'] : '';
+                ?>
+                <tr>
+                    <td style="width: 70%;">
+                        <input type="text" name="studiekosten[<?php echo $i ?>][omschrijving]" value="<?php echo $omschrijving ?>" class="form-control" >
+                    </td>
+                    <td style="width: 30%;">
+                        <input type="text" name="studiekosten[<?php echo $i ?>][bedrag]" value="<?php echo $bedrag ?>" class="form-control" ></td>
+                </tr>
+            <?php endfor; ?>
+        </tbody>
+    </table>
+</div>

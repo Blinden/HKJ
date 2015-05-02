@@ -1,0 +1,21 @@
+<?php $this->render('page-header', $view, 'partials') ?>
+
+<div class="alert">
+    <h3>Helaas</h3>
+    <hr>
+    <br>
+    <p>Wij zijn gespecialiseerd in belastingaangiften voor scholieren en studenten, en werken met een leeftijdsgrens tot 30 jaar.</p>
+    <br>
+    <p>Overige aanvragen nemen we momenteel niet in behandeling.</p>
+    <br>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <a class="btn btn-default btn-sm" href="?action=aangifte&jaar">Terug</a>
+    </div>
+</div>
+<hr>
+<?php
+//include 'views/partials/add-this.phtml';
+$this->render('page-footer', $view, 'partials');

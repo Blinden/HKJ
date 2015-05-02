@@ -1,0 +1,55 @@
+<?php
+$this->render('page-header', $view, 'partials');
+$this->render('aangifte-header', $view, 'aangifte');
+?>
+<form action="?action=aangifte&kosten"method="post">
+    <input type="hidden" name="csrf" value="<?php echo $view['csrf'] ?>" />
+
+    <?php if ($view['aangifte']->studiefinanciering): ?>
+
+        <div class="form-group">
+            <p class="question">Heb je in <?php echo $view['aangifte']->jaar ?> <i>zelf</i>  meer dan &euro;&nbsp;150 aan ziektekosten betaald?</p>
+			<p class="small question"><strong>Ziektekosten</strong> zijn kosten voor bijvoorbeeld medicijnen en behandelingen die niet onder je eigen risico vielen. De premie (dat wat je iedere maand aan je zorgverzekeraar betaalt) valt hier niet onder.</p>
+        </div>
+        <hr>
+        <div style="margin-left:auto; margin-right:auto; width:40%;">
+            <button type="submit" name="antwoord" class="btn <?php echo ($view['aangifte']->extrakosten === true) ? 'btn-warning' : 'btn-default' ?> btn-lg btn-block" value="1">Ja</button>
+            <button type="submit" name="antwoord" class="btn <?php echo ($view['aangifte']->extrakosten === false) ? 'btn-warning' : 'btn-default' ?> btn-lg btn-block" value="0">Nee</button>
+        </div>
+        <div class="clearfix"></div>
+        <br>
+        <hr>
+        <div class="form-group prev-next">
+            <a class="btn btn-default" href="?action=aangifte&kosten&prev">Terug</a>
+            <?php if (in_array($view['aangifte']->extrakosten, array(false, true), true)): ?>
+                <a class="btn btn-warning pull-right" href="?action=aangifte&kosten&next"><span class="glyphicon glyphicon-ok"></span> Ja, dit klopt!</a>
+            <?php endif ?>
+        </div>
+
+    <?php else: ?>
+
+        <div class="form-group">
+            <p class="question">Heb je in <?php echo $view['aangifte']->jaar ?> <i>zelf</i>  meer dan &euro;&nbsp;<?php echo number_format($view['drempel'], 0, ',', '.') ?> aan studiekosten en/of meer dan &euro;&nbsp;150 aan ziektekosten uitgegeven?</p>
+			<p class="small question"><strong>Studiekosten</strong> zijn bijvoorbeeld les- of collegegeld, geld dat je hebt uitgegeven aan kopi&#235;ren, schrijfwaren, studieboeken, etcetera.</p>
+			<p class="small question"><strong>Ziektekosten</strong> zijn kosten voor bijvoorbeeld medicijnen en behandelingen die niet onder je eigen risico vallen. De premie die je aan je zorgverzekeraar betaalt valt niet onder ziektekosten.</p>
+        </div>
+        <hr>
+        <div style="margin-left:auto; margin-right:auto; width:40%;">
+            <button type="submit" name="antwoord" class="btn <?php echo ($view['aangifte']->extrakosten === true) ? 'btn-warning' : 'btn-default' ?> btn-lg btn-block" value="1">Ja</button>
+            <button type="submit" name="antwoord" class="btn <?php echo ($view['aangifte']->extrakosten === false) ? 'btn-warning' : 'btn-default' ?> btn-lg btn-block" value="0">Nee</button>
+        </div>
+        <br>
+        <div class="clearfix"></div>
+        <hr>
+        <div class="form-group prev-next">
+            <a class="btn btn-default" href="?action=aangifte&kosten&prev">Terug</a>
+            <?php if (in_array($view['aangifte']->extrakosten, array(false, true), true)): ?>
+                <a class="btn btn-warning pull-right" href="?action=aangifte&kosten&next"><span class="glyphicon glyphicon-ok"></span> Volgende</a>
+            <?php endif ?>
+        </div>
+
+    <?php endif; ?>
+</form>
+<?php
+$this->render('aangifte-footer', $view, 'aangifte');
+$this->render('page-footer', $view, 'partials');

@@ -1,0 +1,66 @@
+<?php $this->render('page-header', $view, 'partials') ?>
+
+<?php if ($view['teruggave'] < 0): ?>
+
+    <div class="alert alert-warning">
+        <h3>Let op: Je krijgt geen belastinggeld terug</h3>
+        <p>Maar moet betalen als je de aangifte laat indienen. Uiteraard is dit jouw eigen keus.</p>
+    </div>
+
+<?php elseif ($view['teruggave'] == 0): ?>
+
+    <div class="alert alert-warning">
+        <h3>Je krijgt geen belastinggeld terug.</h3>
+        <p>Je hoeft geen aangifte te doen.</p>
+    </div>
+
+<?php elseif ($view['teruggave'] <= $view['drempel']): ?>
+
+    <div class="alert alert-warning">
+        <h3>Als je aangifte doet heb je recht op <span class="label label-warning">&euro;&nbsp;<span id="teruggave"><?php echo number_format($view['teruggave'], 2, ',', '.') ?></span></span></h3>
+    </div>
+    <div class="well well-lg">
+    <h3>Je krijgt echter geen belastinggeld terug.</h3>
+    <p>De Belastingdienst betaalt pas terug als de teruggave van <?php echo $view['aangifte']->jaar ?> meer dan &euro;&nbsp;<?php echo number_format($view['drempel'], 2, ',', '.') ?> bedraagt.</p>
+    <p>Je hoeft geen aangifte te doen.</p>
+    </div>
+
+<?php else: ?>
+
+    <div class="alert alert-warning">
+        <h3>Als je aangifte doet heb je recht op <span class="label label-warning">&euro;&nbsp;<span id="teruggave"><?php echo number_format($view['teruggave'], 2, ',', '.'); ?></span></span></h3>
+        <p>Gefeliciteerd met het snel verdiende geld.</p>
+    </div>
+    <div class="well well-lg">
+        <div class="row">
+            <div class="col-xs-12 small">
+                <h3>Wil je dat wij de aangifte over <?php echo $view['aangifte']->jaar ?> voor jouw afhandelen?</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <p class="small">Voor het verwerken van de aangifte vragen we een kleine bijdrage van 10% tot een maximum van &euro;&nbsp;20,00 per teruggave.</p>
+            </div>
+            <div class="alert alert-success col-sm-6">
+                <p>Voor jou zijn de kosten <strong>&euro;&nbsp;<?php echo number_format($view['onkosten'], 2, ',', '.'); ?></strong>.</p>
+                <p>Voor dit geld zorgen wij dat jij <strong>&euro;&nbsp;<?php echo number_format($view['teruggave'], 2, ',', '.'); ?></strong> belastinggeld terugkrijgt.</p>
+                <br>
+                <div style="margin-left:auto; margin-right:auto; max-width: 240px;">
+                    <a class="btn btn-success btn-lg btn-block" href="?action=aangifte&aanvrager">Ja, verwerk mijn aangifte!</a>
+                    <br>
+                    <a class="btn btn-warning btn-lg btn-block info-tooltip" href="?action=aangifte&korting" title="Deel het goede nieuws over je terugverdiende geld op facebook en krijg 10% korting.">10% korting pakken?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php endif; ?>
+
+<div class="clearfix"></div>
+<hr>
+<div class="form-group">
+    <a class="btn btn-default btn-sm" href="?action=aangifte&kosten&prev">Terug</a>
+</div>
+<?php /*include 'views/partials/add-this.phtml'; */?>
+<?php
+$this->render('page-footer', $view, 'partials');

@@ -1,0 +1,23 @@
+<?php include 'views/partials/page-header.phtml' ?>
+<div id="aangifte-panel" class="panel panel-warning">
+    <div class="panel-heading">
+        <h4>Deel dit bericht op Facebook en ontvang 10% korting!</h4>
+    </div>
+    <div class="panel-body">
+        <h4>Hallo <?php echo $view->aangifte->user->voornaam ?>,</h4>
+        <p>Deel onderstaand bericht op facebook en je ontvangt &euro;&nbsp;<?php echo $view->korting ?> op het laten regelen van je belastingaangifte.</p>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p><?php echo $view->message ?></p>
+            </div>
+        </div>
+        <div>
+            <p>
+                <a class="btn btn-md btn-default" href="?action=aangifte&korting&nee">Nee, bedankt</a>
+				<a class="btn btn-lg btn-warning pull-right" href="?action=aangifte&korting&ja">Deel en ontvang 10% korting</a>
+            </p>
+        </div>
+    </div>
+</div>
+<?php
+include 'views/partials/page-footer.phtml';

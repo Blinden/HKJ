@@ -1,0 +1,21 @@
+<?php if (isset($this->succes) && $this->succes === true): ?>
+    <!-- Google Tag Manager -->
+    <script>
+        dataLayer = [{
+                'transactionId': '<?php echo $view['aangifte']->aangifte_id ?>',
+                'transactionAffiliation': 'iDEAL',
+                'transactionTax': <?php echo number_format($view['onkosten'] * 0.17356, 2) ?>,
+                'transactionTotal': <?php echo number_format($view['onkosten'], 2) ?>,
+                'transactionProducts': [{
+                        'sku': 'V01',
+                        'name': 'Volledige aangifte',
+                        'category': '<?php echo $view['aangifte']->jaar ?>',
+                        'price': <?php echo number_format($view['onkosten'], 2) ?>,
+                        'quantity': 1
+                    }]
+            }];
+    </script>
+    <!-- Google Tag Manager -->
+    <?php
+
+ endif;

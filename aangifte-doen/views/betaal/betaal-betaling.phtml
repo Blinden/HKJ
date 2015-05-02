@@ -1,0 +1,18 @@
+<div class="form-group">
+    <label class="control-label col-sm-3">Order</label>
+    <div class="col-sm-9">
+        <p class="form-control-static"><?php echo $view['aangifte']->getBetaling()->order_id ?></p>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-sm-3">Omschrijving</label>
+    <div class="col-sm-9">
+        <p class="form-control-static"><?php echo $view['aangifte']->getBetaling()->omschrijving ?></p>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-sm-3">Bedrag</label>
+    <div class="col-sm-9">
+        <p class="form-control-static">&euro;&nbsp;<?php echo number_format($view['onkosten'], 2, ',', '.') ?></p>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a class="close" href="?action=opgave&delete=<?php echo $view['opgave']->id ?>" title="Verwijderen">&times;</a>
+        <?php echo $view['opgave']->werkgever ?>&nbsp;
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-xs-6 control-label">Salaris</label>
+                <p class="col-xs-4 form-control-static pull-right">&euro;&nbsp;<?php echo number_format($view['opgave']->salaris, 2, ',', '.') ?></p>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-6 control-label">Loonheffing</label>
+                <p class="col-xs-4 form-control-static pull-right">&euro;&nbsp;<?php echo number_format($view['opgave']->loonheffing, 2, ',', '.') ?></p>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-6 control-label">Arbeidskorting</label>
+                <p class="col-xs-4 form-control-static pull-right">&euro;&nbsp;<?php echo number_format($view['opgave']->arbeidskorting, 2, ',', '.') ?></p>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-xs-12">
+                <a class="btn btn-warning btn-sm pull-right" href="?action=opgave&edit=<?php echo $view['opgave']->id ?>">Wijzig</a>
+            </div>
+        </div>
+    </div>
+</div>

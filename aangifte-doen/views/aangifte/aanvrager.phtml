@@ -1,0 +1,69 @@
+<?php include 'views/partials/page-header.phtml'; ?>
+<div class="page-header visible-sm visible-md visible-lg">
+    <h2>Regel je aangifte<small> in 5 stappen</small></h2>
+</div>
+<div id="aangifte-panel" class="panel panel-warning">
+    <div class="panel-heading">
+        <h3>Je kunt &euro;&nbsp;<?php echo number_format($view['teruggave'], 2, ',', '.') ?> terugkrijgen</h3>
+        <p class="small">Vul hieronder je gegevens in, zodat wij jouw teruggave voor je kunnen regelen met de Belastingdienst.</p>
+    </div>
+    <div class="panel-body">
+        <?php if ($this->hasMessage($script)): ?>
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <?php echo $this->getMessage($script) ?>
+            </div>
+        <?php endif; ?>
+        <form id="form1" action="?action=aangifte&aanvrager" method="post" autocomplete="on">
+            <input type="hidden" name="csrf" value="<?php echo $view['csrf']; ?>" />
+            <input type="hidden" name="aanvrager[id]" value="<?php echo $view['aanvrager']->id ?>" />
+            <div class="form-group">
+                <label class="control-label" for="aanvrager[voornaam]">Voornaam</label>
+                <input type="text" id="aanvrager[voornaam]" name="aanvrager[voornaam]" value="<?php echo $view['aanvrager']->voornaam ?>" class="form-control" title="Verplicht" validate="required:true" autocomplete="given-name">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="aanvrager[achternaam]">Achternaam</label>
+                <input type="text" id="aanvrager[achternaam]" name="aanvrager[achternaam]" value="<?php echo $view['aanvrager']->achternaam ?>" class="form-control" title="Verplicht" validate="required:true" autocomplete="family-name">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="aanvrager[email]">Email</label>
+                <input type="text" id="aanvrager[email]" name="aanvrager[email]" value="<?php echo $view['aanvrager']->email ?>" class="form-control" title="Voer een emailadres in" validate="required:true, email:true" autocomplete="email">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="aanvrager[bsn]">Burgerservicenummer / sofinummer</label>
+                <input type="text" id="aanvrager[bsn]" name="aanvrager[bsn]" value="<?php echo $view['aanvrager']->bsn ?>" class="form-control" title="Invoer verplicht precies 9 cijfers" validate="required:true, number:true, minlength:9, maxlength:9">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="aanvrager[geboorte]">Geboortedatum</label>
+                <input type="text" id="aanvrager[geboorte]" name="aanvrager[geboorte]" value="<?php echo $view['aanvrager']->formatDate($view['aanvrager']->geboorte, 'd-m-Y') ?>" class="form-control" title="Voer je geboortedatum in (d-m-jjjj)" validate="required:true" autocomplete="bday"  placeholder="dd-mm-jjjj">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="">Kosten</label>
+                <p class="form-control-static">&euro;&nbsp;<?php echo number_format($view['onkosten'], 2, ',', '.') ?><?php echo ($view['aangifte']->korting === true) ? ' incl. 10% korting' : '' ?></p>
+            </div>
+
+            <div class="alert alert-info">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="akkoord" name="akkoord" value="1" <?php echo ($view['aangifte']->akkoord) ? 'checked' : '' ?> title="Je zult eerst akkoord moeten gaan met de algemene voorwaarden!" validate="required:true">
+                            Ik ga akkoord met de <a href="/algemenevoorwaarden.pdf" target="_blank">algemene voorwaarden</a>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Verzenden</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<?php
+include 'views/partials/page-footer.phtml';

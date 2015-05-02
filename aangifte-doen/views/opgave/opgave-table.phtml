@@ -1,0 +1,23 @@
+<h4 class="data-overview">Jaaropgave(n)</h4>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Werkgever</th>
+                <th style="text-align: right;">Brutoloon</th>
+                <th style="text-align: right;">Loonheffing</th>
+                <th style="text-align: right;">Arbeidskorting</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($view['aangifte']->opgaves as $opgave): ?>
+                <tr>
+                    <td style="text-align: left;"><?php echo $opgave->werkgever ?>&nbsp;</td>
+                    <td style="text-align: right;">&euro;&nbsp;<?php echo number_format($opgave->salaris, 2, ',', '.') ?></td>
+                    <td style="text-align: right;">&euro;&nbsp;<?php echo number_format($opgave->loonheffing, 2, ',', '.') ?></td>
+                    <td style="text-align: right;">&euro;&nbsp;<?php echo number_format($opgave->arbeidskorting, 2, ',', '.') ?></td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+</div>

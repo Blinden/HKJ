@@ -1,0 +1,90 @@
+<?php include 'views/partials/page-header.phtml'; ?>
+<?php if ($view['aangifte']->jaar == 2008 && false): // Gratis ?>
+<!--
+    <div id="aangifte-panel" class="panel panel-success">
+        <div class="panel-heading">
+            <h3>Aangifte voor 2008 is Gratis!</h3>
+        </div>
+        <div class="panel-body">
+            <p>Wij versturen jouw aangifte binnen 5 werkdagen door naar de Belastingdienst, welke de aangifte volgens haar standaard procedures zal behandelen.</p>
+        </div>
+    </div>
+-->
+<?php else: ?>
+
+    <div id="aangifte-panel" class="panel panel-warning">
+        <div class="panel-heading">
+            <h3>Betaalstatus</h3>
+        </div>
+        <div class="panel-body">
+            <?php if ($view['isCompleted']): ?>
+                <form class="form-horizontal">
+                    <?php $this->render('betaal-betaling', $view) ?>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Status voldaan</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static">De betaling is op <?php echo $view['datum'] ?> verwerkt.</p>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="panel panel-warning">
+                    <div class="panel-body">
+                        <h3>Bedankt!</h3>
+                        <p>Je betaling is succesvol verwerkt!</p>
+                        <p>We sturen jouw aangifte binnen 5 werkdagen naar de Belastingdienst. Zij zullen de aangifte volgens standaardprocedures afhandelen.</p>
+                    </div>
+                </div>
+
+            <?php else: ?>
+
+                <?php if ($view['status'] == "error"): ?>
+
+                    <h3>Er is een fout opgetreden</h3>
+                    <p><?php echo $view['aangifte']->betaling->transaction['error_msg']; ?></p>
+
+                <?php elseif ($view['status'] == "failure"): ?>
+
+                    <h3>Betaling mislukt</h3>
+                    <p>De betaling is helaas niet goed gegaan.</p>
+
+                <?php elseif ($view['status'] == "open"): ?>
+
+                    <h3>Betaling staat nog open</h3>
+                    <p>De betaling is nog niet verwerkt.</p>
+
+                <?php elseif ($view['status'] == "cancelled"): ?>
+
+                    <h3>De betaling is geannuleerd</h3>
+                    <p>Je hebt de betaling geannuleerd.</p>
+
+                <?php else: ?>
+
+                    <h3>Status is onbekend</h3>
+                    <p></p>
+
+                <?php endif ?>
+                <br>
+                <br>
+                <div class="alert alert-danger">
+                    <p><b>Je aangifte wordt pas verwerkt als de betaling binnen is.</b></p>
+                    <p>Als de betaling niet binnen 10 dagen geschiedt wordt de opdracht geannuleerd.</p>
+                </div>
+                <br>
+                <br>
+                <a class="btn btn-info" href="?action=betaal&id=<?php echo $view['aangifte']->aangifte_id ?>">Betaling alsnog uitvoeren</a>
+                <br>
+                <br>
+
+            <?php endif ?>
+        </div>
+    </div>
+
+<?php endif ?>
+
+<br>
+<h3>Enthousiast over je teruggave?</h3>
+<p><b>Vertel het voort!</b></p>
+<?php include 'views/partials/add-this.phtml'; ?>
+<?php
+include 'views/partials/page-footer.phtml';

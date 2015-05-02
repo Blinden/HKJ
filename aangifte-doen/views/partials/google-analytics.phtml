@@ -1,0 +1,54 @@
+<script>
+dataLayer = [{
+    'transactionId': '<?php echo $this->aangifte->aangifte_id ?>',
+    'transactionAffiliation': 'Hoeveelkrijgjij.nl',
+    'transactionTotal': <?php echo number_format($this->kosten, 2, '.', '.'); ?>,
+    'transactionTax': <?php echo number_format($this->kosten, 2, '.', '.'); ?> / 5,761904761904762,
+    'transactionShipping': ,
+    'transactionProducts': [{
+        'sku': 'V01',
+        'name': 'Volledige aangifte',
+        'category': '<?php echo $this->aangifte->jaar ?>',
+        'price': <?php echo number_format($this->onkosten, 2, '.', '.'); ?>,
+        'quantity': 1
+    }]
+}];
+</script>
+
+
+<!-- Google Analytics
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-29115825-1']);
+    _gaq.push(['_trackPageview']);
+    _gaq.push(['_addTrans',
+        '<//?php echo $this->aangifte->aangifte_id ?>', // transaction ID - required
+        '', // affiliation or store name
+        '<//?php echo number_format($this->kosten, 2, '.', '.'); ?>', // total - required
+        '', // tax
+        '', // shipping
+        '', // city
+        '', // state or province
+        ''  // country
+    ]);
+    _gaq.push(['_addItem',
+        '<//?php echo $this->aangifte->aangifte_id ?>', // transaction ID - required
+        'V01', // SKU/code - required
+        'Volledige aangifte', // product name
+        '<//?php echo $this->aangifte->jaar ?>', // category or variation
+        '<//?php echo number_format($this->onkosten, 2, '.', '.'); ?>', // unit price - required
+        '1'    // quantity - required
+    ]);
+    _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
+
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+<!-- End Google Analytics -->

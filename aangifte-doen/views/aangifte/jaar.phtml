@@ -1,0 +1,39 @@
+<?php $this->render('page-header', $view, 'partials') ?>
+
+<div class="panel panel-info">
+    <div class="panel-heading" style="text-align:left;">
+        <h3 style="margin:5px 0;">Eenvoudig loonheffing terugvragen<a class="btn" href="#" data-toggle="collapse" data-target="#collapse-txt"><span class="small">meer informatie...</span> <span class="caret"></span></a></h3>
+    </div>
+    <div id="collapse-txt" class="collapse">
+        <div class="panel-body">
+            <p>Binnen een paar minuten reken je hier geheel vrijblijvend uit hoeveel geld je kunt terugkrijgen van de Belastingdienst. Als je geld kunt terugkrijgen, kun je ons tegen geringe kosten <span class="info-tooltip" title="Om deze website (met gratis rekenmodule) voor iedereen beschikbaar te houden, vragen wij een vergoeding van 10% van jouw teruggave, maar nooit meer dan &euro; 20,00."> <span class="glyphicon glyphicon-question-sign toolhelp"></span></span> direct de teruggave laten regelen. Het enige wat je bij de hand moet hebben is een jaaropgave of loonstrook.</p>
+            <p>Gemiddeld vragen wij voor onze klanten zo'n &euro; 270,39 terug bij de Belastingdienst.</p>
+            <div class="dropup pull-right">
+                <a class="btn" href="#" data-toggle="collapse" data-target="#collapse-txt"> <span class="caret"></span> </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php $this->render('aangifte-header', $view) ?>
+<p class="question">Voor welk jaar wil je belastingteruggave regelen?</p>
+<hr>
+<form action="?action=aangifte&jaar" method="post">
+    <input type="hidden" name="csrf" value="<?php echo $view['csrf']; ?>" />
+    <div style="margin-left:auto; margin-right:auto; margin-bottom: 20px; width:40%;">
+        <?php foreach ($view['jaren'] as $jaar): ?>
+            <button id="<?php echo $jaar ?>" type="submit" name="jaar" value="<?php echo $jaar ?>" class="btn <?php echo ($view['aangifte']->jaar == $jaar) ? 'btn-warning' : 'btn-default' ?> btn-block btn-lg gtm-jaarkeuze"><?php echo $jaar, ($jaar === 2008) ? '<span class="small"> (Gratis*)</span>' : '' ?></button>
+        <?php endforeach ?>
+    </div>
+    <div class="clearfix"></div>
+    <?php if ($view['aangifte']->jaar): ?>
+	<hr>
+    <div class="form-group prev-next">
+        <a class="btn btn-default" href="?action=aangifte">Opnieuw</a>
+        <a class="btn btn-warning pull-right" href="?action=aangifte&jaar&next"><span class="glyphicon glyphicon-ok"></span> Volgende</a>
+    </div>
+    <?php endif ?>
+</form>
+<?php
+$this->render('aangifte-footer', $view);
+$this->render('page-footer', $view, 'partials');

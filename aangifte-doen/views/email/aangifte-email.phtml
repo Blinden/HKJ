@@ -1,0 +1,86 @@
+<?php
+
+$renderWerkgeverOpgave = function($opgaves) {
+    $html = '';
+    foreach ($opgaves as $id => $opgave) {
+        $html .= '<table>';
+        $html .= sprintf('<tr><td>Werkgever %s</td><td>%s</td></tr>', $id, $opgave->werkgever);
+        $html .= sprintf('<tr><td>Brutoloon %s</td><td>%s</td></tr>', $id, floor($opgave->salaris));
+        $html .= sprintf('<tr><td>Loonheffing %s</td><td>%s</td></tr>', $id, floor($opgave->loonheffing));
+        $html .= sprintf('<tr><td>Arbeidskorting %s</td><td>%s</td></tr>', $id, floor($opgave->arbeidskorting));
+        $html .= '</table>';
+        $html .= '<br>';
+    }
+    return $html;
+};
+
+$renderStudiekosten = function($studiekosten) {
+    $html = '<table>';
+    foreach ($studiekosten as $id => $kosten) {
+        $html .= sprintf('<tr><td>Studiepost %s</td><td>%s</td><td>%s</td></tr>', $id, $kosten['omschrijving'], $kosten['bedrag']);
+    }
+    $html .= '</table>';
+    return $html;
+};
+
+$renderZiektekosten = function($ziektekosten) {
+    $html = '<table>';
+    foreach ($ziektekosten as $id => $kosten) {
+        $html .= sprintf('<tr><td>Ziektepost %s</td><td>%s</td><td>%s</td></tr>', $id, $kosten['omschrijving'], $kosten['bedrag']);
+    }
+    $html .= '</table>';
+    return $html;
+};
+
+return <<<"TEXT"
+<html>
+    <head>
+        <style type="text/css">
+        <!--
+        body, table {
+            font-family:Trebuchet MS;
+            font-size:10pt;
+        }
+        -->
+        </style>
+    </head>
+    <body>
+        <p>Geachte {$view['aangifte']->getUser()->voornaam} {$view['aangifte']->getUser()->achternaam},</p>
+        <p>U heeft de volgende gegevens aangeleverd. Wij raden je aan om deze e-mail uit te printen voor jouw eigen administratie.</p>
+        <table>
+            <tr><td>Achternaam:</td><td>{$view['aangifte']->getUser()->achternaam}</td></tr>
+            <tr><td>Voorletters:</td><td>{$view['aangifte']->getUser()->voornaam}</td></tr>
+            <tr><td>E-mailadres:</td><td>{$view['aangifte']->getUser()->email}</td></tr>
+            <tr><td>Geboortedatum:</td><td>{$view['aangifte']->formatDate($view['aangifte']->getUser()->geboorte, 'Y-m-d')}</td></tr>
+            <tr><td>BSN:</td><td>{$view['aangifte']->getUser()->bsn}</td></tr>
+        </table>
+        <br>
+        {$renderWerkgeverOpgave($view['aangifte']->opgaves)}
+        <br>
+        {$renderStudiekosten($view['aangifte']->studiekosten)}
+        <br>
+        {$renderZiektekosten($view['aangifte']->ziektekosten)}
+        <br>
+        Totale teruggave: <b>{$view['teruggave']}</b><br>
+        Kosten Totaal: <b>{$view['onkosten']}</b><br>
+        <br>
+        <br>
+        <i>Je aangifte wordt pas verwerkt als de betaling binnen is.</i><br>
+        <br>
+        Nog niet betaald? <a href="http://www.hoeveelkrijgjij.nl/aangifte-doen/public_html/?action=betaal&id={$view['aangifte']->aangifte_id}">Klik hier om alsnog te betalen via iDeal!</a>.<br>
+        Als de betaling niet binnen 10 dagen geschiedt wordt de opdracht geannuleerd!<br>
+        <br>
+        Wij zullen zo spoedig mogelijk de verwerking bij de Belastingdienst bevestigen.<br>
+        <br>
+        <br>
+        Met vriendelijke groet,
+        <br>
+        <br>
+        <b>Team Hoeveelkrijgjij.nl</b><br>
+        <a href="http://www.hoeveelkrijgjij.nl">www.hoeveelkrijgjij.nl</a>
+        <br>
+        <br>
+        <br><img src="http://www.hoeveelkrijgjij.nl/email.jpg">
+    </body>
+</html>
+TEXT;

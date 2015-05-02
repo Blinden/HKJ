@@ -1,0 +1,21 @@
+<?php $this->render('page-header', $view, 'partials') ?>
+<br>
+<br>
+<a class="btn btn-default" href="?action=facebook&login">Aanmelden</a>
+<br>
+<br>
+<a class="btn btn-default" href="<?php echo $view->loginUrl ?>">Facebook aanmelden</a>
+<br>
+<br>
+<a class="btn btn-default" href="<?php echo $view->logoutUrl ?>">Facebook afmelden</a>
+<br>
+<br>
+<a class="btn btn-default" href="<?php echo $view->statusUrl ?>">Status</a>
+
+<h3>User profiel</h3>
+<pre>
+    <?php echo print_r($view->profiel) ?>
+</pre>
+
+<?php $this->render('page-footer', $view, 'partials') ?>
+<?php

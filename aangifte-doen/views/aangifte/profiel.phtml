@@ -1,0 +1,68 @@
+<?php include 'views/partials/page-header.phtml'; ?>
+<?php $this->render('aangifte-header', $view) ?>
+<p class="question">Na deze stap zie je hoeveel je kunt terugvragen. Dan is de keuze aan jou om de aangifte direct door ons te laten indienen bij de Belastingdienst, of het op een later tijdstip zelf te regelen.</p>
+<hr>
+<form id="form1" class="form-horizontal" action="?action=aangifte&profiel" method="post" autocomplete="on">
+    <input type="hidden" name="csrf" value="<?php echo $view['csrf']; ?>">
+    <input type="hidden" name="profiel[id]" value="<?php echo $view['profiel']->id ?>">
+    <div class="form-group">
+        <label class="control-label col-sm-3 no-gutter-right" for="profiel[voornaam]">Voornaam: <span class="glyphicon"></span></label>
+        <div class="col-sm-9">
+            <input type="text" id="profiel[voornaam]" name="profiel[voornaam]" value="<?php echo $view['profiel']->voornaam ?>" class="form-control" title="Verplicht" validate="required:true" autocomplete="given-name">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-3 no-gutter-right" for="profiel[achternaam]">Achternaam: <span class="glyphicon"></span></label>
+        <div class="col-sm-9">
+            <input type="text" id="profiel[achternaam]" name="profiel[achternaam]" value="<?php echo $view['profiel']->achternaam ?>" class="form-control" title="Verplicht" validate="required:true" autocomplete="family-name">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-3 no-gutter-right" for="profiel[email]">E-mailadres: <span class="glyphicon"></span></label>
+        <div class="col-sm-9">
+            <input type="text" id="profiel[email]" name="profiel[email]" value="<?php echo $view['profiel']->email ?>" class="form-control" title="Voer een emailadres in" validate="required:true, email:true" autocomplete="email">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-3 no-gutter-right" for="profiel[bsn]">BSN:
+            <span class="info-tooltip" title="Ook wel genoemd: Burgerservicenummer of Sofinummer. Je BSN wordt alleen gebruikt als we, met jouw toestemming, je belastingaangifte indienen bij de Belastingdienst. We delen deze informatie nooit met andere partijen."><span class="glyphicon glyphicon-question-sign toolhelp"></span></span>
+        </label>
+        <div class="col-sm-9">
+            <input type="text" id="profiel[bsn]" name="profiel[bsn]" value="<?php echo $view['profiel']->bsn ?>" class="form-control" title="Invoer verplicht precies 9 cijfers" validate="required:true, number:true, minlength:9, maxlength:9">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-3 no-gutter-right" for="profiel[geboorte]">Geboortedatum: <span class="glyphicon"></span></label>
+        <div class="col-sm-9">
+            <?php $this->render('date-select', array('field' => 'profiel[geboorte]', 'date' => $view['profiel']->geboorte), 'partials') ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="profiel[nieuwsbrief]" name="profiel[nieuwsbrief]" value="1">
+                    Hoeveelkrijgjij.nl mag mij soms mailen, bijvoorbeeld een herinnering voor de volgende belastingaangifte.
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+	<hr>
+	<p class="question" style="color: #079500;"><span class="glyphicon glyphicon-lock"></span> Berekenen is vrijblijvend. Je gegevens worden vertrouwelijk behandeld, en verzonden over een beveiligde internetverbinding.</p>
+    <hr>
+    <div class="form-group prev-next">
+        <div class="col-sm-12">
+            <a class="btn btn-default" href="?action=aangifte&profiel&prev">Terug</a>
+            <button type="submit" class="btn btn-warning pull-right"><span class="glyphicon glyphicon-euro"></span> Teruggave berekenen</button>
+        </div>
+    </div>
+</form>
+<?php
+$this->render('aangifte-footer', $view);
+$this->render('page-footer', $view, 'partials');

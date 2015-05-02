@@ -1,0 +1,28 @@
+<div id="aangifte-panel" class="panel panel-warning">
+    <div class="panel-heading top-heading">
+        <ol class="breadcrumb">
+            <?php 
+                // When it works it works
+                $breadcrumbs = array('Jaarkeuze' => 'aangifte&jaar', 'Geschiktheid' => 'aangifte&check', 'Jaaropgaven' => 'opgave', 'Aftrekposten' => 'aangifte&studiefinanciering', 'Klantgegevens' => 'aangifte&profiel');
+                foreach ($breadcrumbs as $key => $value):
+                    $position = array_search($key, array_keys($breadcrumbs))+1;
+            ?>
+            <li<?php if ($position == $view['progress']['step']): ?> class="active"<?php elseif ($position > $view['progress']['step']): ?> class="inactive"<?php endif; ?>><?php echo $position.'. '; if ($position < $view['progress']['step']): ?><a href="?action=<?php echo $value; ?>"><?php echo $key; ?></a><?php else: echo $key; endif; ?></li>
+            <?php endforeach; ?>
+        </ol>
+        <select class="mobile-breadcrumb">
+            <?php foreach ($breadcrumbs as $key => $value):
+                $position = array_search($key, array_keys($breadcrumbs))+1;
+            ?>
+            <option value="<?php if ($position < $view['progress']['step']): echo '?action='.$value; endif; ?>"<?php if($position == $view['progress']['step']): ?> selected="selected"<?php elseif ($position > $view['progress']['step']): ?> disabled<?php endif; ?>><?php echo $position.'. '.$key; ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <div class="panel-body">
+        <?php if ($this->hasMessage($script)): ?>
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <?php echo $this->getMessage($script) ?>
+            </div>
+        <?php endif; ?>
+        <h1><?php echo $view['title'] ?></h1>

@@ -1,0 +1,171 @@
+/**
+ * ISSUES
+ */
+
+ISSUE:0003:
+
+
+
+/**
+ * TASKS
+ */
+ Error
+- add email-catcher to error/500.phtml
+Mandrill
+- store response data for save-delete of scheduled emails
+
+/**
+ * IMPLEMENTED
+ */
+// 2014-01-28
+//-----------------
+MandrillService
+- getMergeVariables() now uses BetaalService::getGetBetaalUrl()
+BetaalService
+- added GetBetaalUrl()
+FrontController
+- added betaal-url to BetaalService config
+- removed betaalstatus-url from BetaalService config
+
+// 2014-01-17
+//-----------------
+src/Mandrill.php
+- removed Mandrill hack
+
+// 2014-01-16
+//-----------------
+src/Mandrill.php hack
+MandrillService
+- added 'google_analytics_domains' => array('hoeveelkrijgjij.nl') to message in sendTemplate()
+
+// 2014-01-15
+//-----------------
+added change from server in template aangifte/jaar.phtml
+
+/**
+ * COMMITED branch: env
+ */
+
+MandrillService
+- add metadata (aangifte_id) to email
+- added $message = array( ..'google_analytics_campaign' => $template, ...) to message in sendTemplate()
+templates studiekosten.phtml and ziektekosten.phtml are re-entrty
+Database
+- fix bug in exceptions
+
+// 2014-01-14
+//-----------------
+Session
+- implemeted delete method
+TableService
+- implemented TableService extends AbstractService
+AangifteService
+- extends TableService
+BetaalService
+- extends TableService
+UserService
+- extends TableService
+
+SOLVED:ISSUE:0002:2014-01-13:low: development betaal test is not logged in?
+- today it worked!
+AangifteController
+SOLVED:ISSUE:0001:2014-01-12: user.facebook_id is not saved
+- facebookAction() profile is merged with user. Overwrite did loose user_id
+AbstractEntity
+- changed formatDate($date, $format) to formatDate($date, $format = 'Y-m-d H:i:s')
+Added error_handler
+
+// 2014-01-13
+//-----------------
+AangifteController
+- moved persist email_verstuurd to AangifteService::sendAangifteMails()
+BetaalController
+- getAangifte() added flashMessage to akkoord check fails,
+                added extra jaar check
+
+
+// 2014-01-12
+//-----------------
+Database
+- moved to vendor/ooit
+Session
+- moved to vendor/ooit
+ServiceProvider
+- moved to vendor/ooit/Service
+AbstractController
+- moved to vendor/ooit/Controller
+TestController
+- added ?test=error throws exception
+AbstractService
+- changed getConfig() prefixed config path with services key
+FrontController
+- added error page error/error-500 template
+- added vendor/ooit/ooit.php bootstrap
+- moved services config to services config path
+- getConfig() takes a name and a default
+- added ENV_TESTING enviroment to config
+
+
+// 2014-01-11
+//-----------------
+Mandrill
+- added config_key api_key
+Database
+- added config_key dns
+FacebookService
+- added config_key api_key and secret
+IdealService
+- IdealService replaces old ideal.sepa.blabla STATUS: test
+- added config_key connector-config
+BetaalService
+- Refactured
+- added config_key betaalstatus-url
+- added getBetaalStatusUrl()     STATUS: test
+BetaalService
+- refactured betaalAction
+- refactured statusAction
+
+
+//2014-01-10
+//-----------------
+AbstractService
+- getDatabase() now calls ServiceProvider. getDatabase() is now depriciated.        STATUS: Production
+- added getConfig()     STATUS: test
+FrontController
+- added enviroment aware configuration      STATUS: test
+Mandrill
+- added to vendor code -hack- to allow development: Windows XP? and SSL?
+
+FILE: vendor/mandrill/src/Mandrill.php
+r99: // TBD CURLOPT_SSL_VERIFYPEER
+r100: curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FrontController::getEnviroment() === FrontController::ENV_PRODUKTION);
+
+
+/**
+ * PRODUCTION
+ */
+
+MandrillService
+- enable composeRecipents handle 'to', 'bcc', ...
+- added bcc to fritskok@gmail.com to AangifteService::sendAaangifteMails() - orderbevestiging
+iDeal
+- added folder ./vendor/ideal/certificates
+- changed certificates in ./vendor/ideal/Connector/config.conf to point to ./vendor/ideal/certificates
+AangifteService
+- rename AangifteService::berekenTeruggave() to AangifteService::teruggave()
+- added round(.., 2) to AangifteService::teruggave()
+- added number_format to teruggave in views/aangifte/aanvrager.pthml
+AbstractTable
+- implemented delete
+
+
+// 2014-01-09
+//-----------------
+AangifteTable
+- unique_hkj_aangifte_aangifte_id index is now unique
+BetaalService
+- persist aangifte in startTransaction
+BetaalController
+- refactor getAangifte()
+- make all betaal-urls with id={$aangifte->aangifte_id}
+

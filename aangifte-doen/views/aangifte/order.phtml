@@ -1,0 +1,152 @@
+<?php $this->render('page-header', $view, 'partials') ?>
+
+<?php if ($view['teruggave'] < 0): ?>
+
+    <div class="alert alert-warning">
+        <h3>Let op: Je krijgt geen belastinggeld terug</h3>
+        <p>Maar moet betalen als je de aangifte laat indienen. Uiteraard is dit jouw eigen keus.</p>
+    </div>
+
+<?php elseif ($view['teruggave'] == 0): ?>
+
+    <div class="alert alert-warning">
+        <h3>Je krijgt geen belastinggeld terug.</h3>
+        <p>Je hoeft geen aangifte te doen.</p>
+    </div>
+
+<?php elseif ($view['teruggave'] <= $view['drempel']): ?>
+
+    <div class="alert alert-warning">
+        <h3>Als je aangifte doet heb je recht op <span class="label label-warning">&euro;&nbsp;<span id="teruggave"><?php echo number_format($view['teruggave'], 2, ',', '.') ?></span></span></h3>
+    </div>
+    <div class="well well-lg">
+        <h3>Je krijgt echter geen belastinggeld terug.</h3>
+        <p>De Belastingdienst betaalt pas terug als de teruggave van <?php echo $view['aangifte']->jaar ?> meer dan &euro;&nbsp;<?php echo number_format($view['drempel'], 2, ',', '.') ?> bedraagt.</p>
+        <p>Je hoeft geen aangifte te doen.</p>
+    </div>
+
+<?php else: ?>
+
+    <div class="panel panel-warning" id="aangfite-panel">
+        <div class="panel-heading">
+			<h3 style="text-align:center;">Resultaat berekening</strong></h3>
+        </div>
+        <div class="panel-body">
+            <?php if ($this->hasMessage($script)): ?>
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <?php echo $this->getMessage($script) ?>
+                </div>
+            <?php endif ?>
+            <form id="form1" class="form-horizontal" action="?action=aangifte&order" method="post" autocomplete="on">
+                <input type="hidden" name="csrf" value="<?php echo $view['csrf']; ?>">
+
+                <div class="form-group">
+					<h4 style="text-align:center;padding: 35px 15px 15px;">Je hebt recht op <strong>&euro;&nbsp;<span id="teruggave"><?php echo number_format($view['teruggave'], 2, ',', '.') ?></span></strong> belastingteruggave</strong>.</h4>
+                </div>
+
+                <div class="clearfix"></div>
+                <hr>
+				
+				<div class="form-group" style="padding-top:14px;">
+					<div class="col-sm-offset-2 col-sm-8">
+						<h1>Belastingaangifte direct indienen</h1>
+						<p class="question" style="padding-bottom: 16px;">Hoeveelkrijgjij.nl is geregistreerd belastingconsulent en kan de aangifte direct voor je indienen. Je hoeft zelf verder niets te doen. De teruggave wordt binnen enkele maanden door de Belastingdienst op je rekening gestort.</p>
+
+                    <p class="question"><strong>Jouw teruggave van &euro;&nbsp;<?php echo number_format($view['teruggave'], 2, ',', '.') ?> regelen wij direct voor:</strong> &euro; <?php echo number_format($view['onkosten'], 2, ',', '.') ?>
+                            <?php echo ($view['aangifte']->korting === true) ? ' incl. 10% korting' : '' ?>
+                        (iDEAL)</p>
+					</div>
+                </div>
+				
+                <div class="form-group" style="margin-bottom:0px">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <div class="checkbox">
+                            <label class="control-label">
+                                <input type="checkbox" id="verified" name="verified" value="1" <?php echo ($view['aangifte']->akkoord) ? 'checked' : '' ?> title="Controleer je gegevens" validate="required:true">
+                                Ik heb alle gegevens naar waarheid ingevuld.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <div class="checkbox">
+                            <label class="control-label">
+                                <input type="checkbox" id="akkoord" name="akkoord" value="1" <?php echo ($view['aangifte']->akkoord) ? 'checked' : '' ?> title="Je zult eerst akkoord moeten gaan met de algemene voorwaarden" validate="required:true">
+                                Ik ga akkoord met de <a href="/algemenevoorwaarden.pdf" target="_blank">algemene voorwaarden</a>.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="padding: 18px 0;">
+                    <div class="col-sm-offset-4 col-sm-4">
+                        <button type="submit" class="btn btn btn-warning btn-block center-block btn-lg"><span class="glyphicon glyphicon-shopping-cart"></span> &nbsp;Belastingaangifte indienen</button>
+                        <!--<button type="submit" class="btn btn-success btn-block center-block btn-lg"><span class="glyphicon glyphicon-ok"></span> Betaal</button>-->
+
+				<?php if ($view['aangifte']->korting !== true): ?>
+                    <div class="alert alert-default alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <p class="question">Laat vrienden op Facebook weten over deze dienst en ontvang &euro;&nbsp;<?php echo number_format((0.1 * $view['onkosten']), 2, ',', '.') ?> korting op het laten doen van je aangifte.</p>
+						<p class="question"><a class="btn btn-primary info-tooltip" href="?action=aangifte&korting" title="Deel het nieuws over je terugverdiende geld op facebook en krijg 10% korting.">Deel op Facebook</a></p>
+                    </div>
+                <?php endif ?>
+
+                    </div>
+                </div>
+				
+				<div class="clearfix"></div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">Ontvangen gegevens</h1>
+                    </div>
+                    <div class="panel-body">
+					<h4 class="data-overview">Klantgegevens</h4>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: bolder; width: 20%;border:0;">Naam</td>
+                                    <td style="border:0;"><?php echo $view['aangifte']->getUser()->getFullname() ?></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bolder; width: 20%;">Email</td>
+                                    <td><?php echo $view['aangifte']->getUser()->email ?></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bolder; width: 20%;">Geboortedatum</td>
+                                    <td><?php echo $view['aangifte']->formatDate($view['aangifte']->getUser()->geboorte, 'd-m-Y') ?></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bolder; width: 20%;">BSN</td>
+                                    <td><?php echo $view['aangifte']->getUser()->bsn ?></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bolder; width: 20%;">Studiefinanciering</td>
+                                    <td><?php echo $view['aangifte']->studiefinanciering ? 'Ja' : 'nee' ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <?php $this->render('opgave-table', $view, 'opgave') ?>
+                        <?php $this->render('aftrekpost-table', $view, 'aangifte') ?>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+                <hr>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <a class="btn btn-default" href="?action=aangifte&order&prev">Terug</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+<?php endif; ?>
+
+<?php /* include 'views/partials/add-this.phtml'; */ ?>
+<?php
+$this->render('page-footer', $view, 'partials');

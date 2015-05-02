@@ -1,0 +1,67 @@
+<?php
+
+function day_select_options(\Datetime $date = null)
+{
+    $day = ($date) ? $date->format('d') : -1;
+    $html = '<option></option>';
+    for ($i = 1; $i <= 31; $i++) {
+        $html .= sprintf('<option value="%d"%s>%d</option>', $i,$i==$day?' selected':'', $i);
+    }
+    return $html;
+}
+
+function month_select_options(\Datetime $date = null)
+{
+    $months = array(
+        '1' => 'januari',
+        '2' => 'februari',
+        '3' => 'maart',
+        '4' => 'april',
+        '5' => 'mei',
+        '6' => 'juni',
+        '7' => 'juli',
+        '8' => 'augustus',
+        '9' => 'september',
+        '10' => 'oktober',
+        '11' => 'november',
+        '12' => 'december',
+    );
+    $month = ($date) ? $date->format('m') : -1;
+    $html = '<option></option>';
+    foreach ($months as $key => $value) {
+        $html .= sprintf('<option value="%s"%s>%s</option>', $key, $key==$month?' selected':'', $value);
+    }
+    return $html;
+}
+
+function year_select_options(\Datetime $date = null)
+{
+    $now = new \Datetime();
+    $year = ($date) ? $date->format('Y') : -1;
+    $html = '<option></option>';
+    for ($i = $now->format('Y') - 31; $i <= $now->format('Y') - 8; $i++) {
+        $html .= sprintf('<option value="%d"%s>%d</option>', $i, $i==$year?' selected':'', $i);
+    }
+    return $html;
+}
+
+?>
+<div class="row">
+    <div class="col-xs-4 col-sm-3 col-md-2">
+        <select id="profiel[geboorte]" name="<?php echo $view['field'] ?>[day]"class="form-control" title="Geef de dag in" validate="required:true" autocomplete="bday" placeholder="dag">
+            <?php echo day_select_options($view['date']) ?>
+        </select>
+    </div>
+    <div class="col-xs-4 col-md-3 col-lg-2">
+        <select name="<?php echo $view['field'] ?>[month]"class="form-control" title="Geef de maand in" validate="required:true" autocomplete="bday" placeholder="maand">
+            <?php echo month_select_options($view['date']) ?>
+        </select>
+    </div>
+    <div class="col-xs-4 col-sm-3 col-lg-2">
+        <select name="<?php echo $view['field'] ?>[year]"class="form-control" title="Geef het jaar in" validate="required:true" autocomplete="bday" placeholder="jaar">
+            <?php echo year_select_options($view['date']) ?>
+        </select>
+    </div>
+</div>
+
+

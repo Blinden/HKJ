@@ -1,0 +1,38 @@
+<?php
+
+$nl2br = function($text) {
+    return nl2br($text);
+};
+
+return <<<"TEXT"
+<html>
+    <head>
+        <style type="text/css">
+        <!--
+        body {
+            font-family:Trebuchet MS;
+            font-size:10pt;
+        }
+        -->
+        </style>
+    </head>
+    <body>
+        <p>Geachte heer Kok,</p>
+        <p>De volgende persoon heeft meer dan 18.000 verdiend in {$this->aangifte->jaar}:</p>
+        <table>
+            <tr><td>Achternaam:</td><td>{$this->aangifte->aanvrager['achternaam']}</td></tr>
+            <tr><td>Voorletters:</tdt><td>{$this->aangifte->aanvrager['voorletters']}</td></tr>
+            <tr><td>E-mailadres:</td><td>{$this->aangifte->aanvrager['email']}</td></tr>
+            <tr><td>Opmerking:</td><td>{$nl2br($this->aangifte->aanvrager['vraag'])}</td></tr>
+        </table>
+        <br>
+        <br>
+        Met vriendelijke groet,
+        <br>
+        <br>
+        <p><b>Team Hoeveelkrijgjij.nl</b><br>
+        <a href="http://www.hoeveelkrijgjij.nl">www.hoeveelkrijgjij.nl</a>
+        </p>
+    </body>
+</html>
+TEXT;

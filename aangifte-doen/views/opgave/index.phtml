@@ -1,0 +1,38 @@
+<?php
+$this->render('page-header', $view, 'partials');
+$this->render('aangifte-header', $view, 'aangifte');
+?>
+<hr>
+<div class="row equal">
+    <?php foreach ($view['opgaves'] as $opgave): ?>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <?php $this->render('detail', array('opgave' => $opgave)) ?>
+        </div>
+    <?php endforeach; ?>
+    <?php if ($view['opgave_count'] < 5): ?>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="panel panel-default fixed-height">
+                <div class="panel-heading">Meerdere werkgevers?</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 text-center">
+                            <a class="btn btn-default info-tooltip" href="?action=opgave&insert" title="Jaaropgave toevoegen"><span class="glyphicon glyphicon-plus"></span> Jaaropgave toevoegen</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
+<div class="row">
+    <div class="col-xs-12 prev-next">
+        <hr>
+        <a class="btn btn-default" href="?action=opgave&prev">Terug</a>
+        <div class="pull-right">
+            <a class="btn btn-warning" href="?action=opgave&next"><span class="glyphicon glyphicon-ok"></span> Volgende</a>
+        </div>
+    </div>
+</div>
+<?php
+$this->render('aangifte-footer', $view, 'aangifte');
+$this->render('page-footer', $view, 'partials');
